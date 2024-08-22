@@ -4,7 +4,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    fetch("http://localhost:8080/user/login", {
+    fetch("http://localhost:8080/user/auth/login", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -13,7 +13,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     })
     .then(response => {
         if (response.ok) {
-            return response.text();
+            return "Login realizado com sucesso!"
         } else if (response.status === 401 || response.status === 400) {
             return response.text().then(text => { throw new Error(text); });
         } else {

@@ -5,7 +5,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:8080/user', {
+    fetch('http://localhost:8080/user/auth', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
