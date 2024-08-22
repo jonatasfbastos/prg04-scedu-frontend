@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Falta</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Adicionar Falta</h1>
+        <form id="addAbsenceForm">
+            <label for="studentName">Nome do Aluno:</label>
+            <input type="text" id="studentName" name="studentName" required>
+
+            <label for="absenceDate">Data da Falta:</label>
+            <input type="date" id="absenceDate" name="absenceDate" required>
+
+            <label for="justified">Justificada:</label>
+            <select id="justified" name="justified" required>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>
+
+            <label for="subject">Disciplina:</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <button type="submit">Adicionar Falta</button>
+        </form>
+        <a href="./listar_faltas.html">Voltar para Lista de Faltas</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
