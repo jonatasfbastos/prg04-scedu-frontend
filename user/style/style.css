@@ -1,70 +1,80 @@
+/* Estiliza o corpo da página */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    font-family: Arial, sans-serif; /* Define a fonte do corpo como Arial, com uma alternativa sans-serif */
+    background-color: #f0f0f0; /* Define a cor de fundo da página como um cinza muito claro */
+    display: flex; /* Utiliza o layout Flexbox para o corpo */
+    justify-content: center; /* Alinha horizontalmente o conteúdo ao centro */
+    align-items: center; /* Alinha verticalmente o conteúdo ao centro */
+    height: 100vh; /* Define a altura do corpo como 100% da altura da viewport */
+    margin: 0; /* Remove a margem padrão do corpo */
 }
 
+/* Estiliza os containers de login e registro */
 .login-container, .register-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
+    background-color: #fff; /* Define a cor de fundo dos containers como branco */
+    padding: 20px; /* Adiciona 20px de padding interno aos containers */
+    border-radius: 8px; /* Adiciona bordas arredondadas aos containers com um raio de 8px */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve ao redor dos containers */
+    width: 300px; /* Define a largura dos containers como 300px */
+    text-align: center; /* Centraliza o texto dentro dos containers */
 }
 
+/* Estiliza o título */
 h2 {
-    margin-bottom: 20px;
-    color: #333;
+    margin-bottom: 20px; /* Adiciona uma margem inferior de 20px ao título */
+    color: #333; /* Define a cor do texto do título como um cinza escuro */
 }
 
+/* Estiliza o grupo de inputs */
 .input-group {
-    margin-bottom: 15px;
-    text-align: left;
+    margin-bottom: 15px; /* Adiciona uma margem inferior de 15px ao grupo de inputs */
+    text-align: left; /* Alinha o texto dentro do grupo de inputs à esquerda */
 }
 
+/* Estiliza os rótulos (labels) dos campos de entrada */
 label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+    display: block; /* Define o display dos rótulos como block para ocupar toda a linha */
+    margin-bottom: 5px; /* Adiciona uma margem inferior de 5px aos rótulos */
+    color: #555; /* Define a cor do texto dos rótulos como um cinza médio */
 }
 
+/* Estiliza os campos de entrada de email, senha e nome */
 input[type="email"], input[type="password"], #name {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    width: 100%; /* Define a largura dos campos como 100% do contêiner pai */
+    padding: 8px; /* Adiciona 8px de padding interno aos campos */
+    box-sizing: border-box; /* Inclui padding e borda na largura total dos campos */
+    border: 1px solid #ccc; /* Define uma borda de 1px sólida e cinza clara ao redor dos campos */
+    border-radius: 4px; /* Adiciona bordas arredondadas aos campos com um raio de 4px */
 }
 
+/* Estiliza os botões */
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
+    width: 100%; /* Define a largura do botão como 100% do contêiner pai */
+    padding: 10px; /* Adiciona 10px de padding interno ao botão */
+    background-color: #007bff; /* Define a cor de fundo do botão como azul */
+    border: none; /* Remove a borda padrão do botão */
+    border-radius: 4px; /* Adiciona bordas arredondadas ao botão com um raio de 4px */
+    color: #fff; /* Define a cor do texto do botão como branco */
+    font-size: 16px; /* Define o tamanho da fonte do botão como 16px */
+    cursor: pointer; /* Define o cursor como pointer quando sobre o botão */
+    margin-top: 15px; /* Adiciona uma margem superior de 15px ao botão */
 }
 
+/* Estiliza o botão quando o mouse está sobre ele */
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Muda a cor de fundo para um azul mais escuro quando o mouse está sobre o botão */
 }
 
+/* Estiliza a mensagem de erro */
 #error-message {
-    margin-top: 15px;
-    color: red;
-    font-size: 14px;
-    display: none;
+    margin-top: 15px; /* Adiciona uma margem superior de 15px à mensagem de erro */
+    color: red; /* Define a cor do texto da mensagem de erro como vermelho */
+    font-size: 14px; /* Define o tamanho da fonte da mensagem de erro como 14px */
+    display: none; /* Inicialmente oculta a mensagem de erro */
 }
 
+/* Estiliza os parágrafos dentro dos formulários de login e registro */
 #loginForm p, #registerForm p {
-    margin-top: 30px;
-    color: #555;
+    margin-top: 30px; /* Adiciona uma margem superior de 30px aos parágrafos */
+    color: #555; /* Define a cor do texto dos parágrafos como um cinza médio */
 }
