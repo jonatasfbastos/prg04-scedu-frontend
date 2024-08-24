@@ -1,33 +1,36 @@
-const apiUrl = 'http://localhost:8080/gestaoTerceirizados';
-
-// Função para buscar todos os terceirizados e exibir na tabela
-function fetchTerceirizados() {
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.querySelector('#terceirizados-table tbody');
-            tableBody.innerHTML = '';
-            data.forEach(terceirizado => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${terceirizado.id}</td>
-                    <td>${terceirizado.name}</td>
-                    <td>${terceirizado.cpf}</td>
-                    <td>${terceirizado.email}</td>
-                    <td>
-                        <button onclick="viewTerceirizado(${terceirizado.id})">Ver</button>
-                        <button onclick="editTerceirizado(${terceirizado.id})">Editar</button>
-                        <button onclick="deleteTerceirizado(${terceirizado.id})">Excluir</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
+// Carrega todos os terceirizados
+function loadTerceirizados() {
+    fetch('http://localhost:8080/gestaoTerceirizados', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+    })
+    .then(response => response.json())
+    .then(terceirizados => {
+        const tbody = document.querySelector('#terceirizados-table tbody');
+        tbody.innerHTML = '';
+        terceirizados.forEach(tc => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${tc.id}</td>
+                <td>${tc.name}</td>
+                <td>${tc.cpf}</td>
+                <td>${tc.email}</td>
+                <td>
+                    <button onclick="editTerceirizado(${tc.id})">Editar</button>
+                    <button onclick="deleteTerceirizado(${tc.id})">Excluir</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
         });
+    });
 }
 
-// Função para criar um novo terceirizado
-document.getElementById('create-form')?.addEventListener('submit', function (event) {
+// Cria um novo terceirizado
+document.getElementById('create-form').addEventListener('submit', function(event) {
     event.preventDefault();
+
     const terceirizado = {
         name: document.getElementById('name').value,
         cpf: document.getElementById('cpf').value,
@@ -39,25 +42,34 @@ document.getElementById('create-form')?.addEventListener('submit', function (eve
         enterprise: document.getElementById('enterprise').value,
         department: document.getElementById('department').value,
         status: document.getElementById('status').checked,
-        observations: document.getElementById('observations').value,
+        observations: document.getElementById('observations').value
     };
 
-    fetch(apiUrl, {
+    fetch('http://localhost:8080/gestaoTerceirizados/save', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify(terceirizado)
-    }).then(() => {
-        window.location.href = 'tc-index.html';
-    });
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Terceirizado criado com sucesso!');
+            window.location.href = 'tc-index.html';
+        } else {
+            return response.text().then(text => { throw new Error(text); });
+        }
+    })
+    .catch(error => alert('Erro: ' + error.message));
 });
 
-// Função para atualizar um terceirizado existente
-document.getElementById('update-form')?.addEventListener('submit', function (event) {
+// Atualiza um terceirizado
+document.getElementById('update-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const id = document.getElementById('id').value;
+
     const terceirizado = {
+        id: document.getElementById('id').value,
         name: document.getElementById('name').value,
         cpf: document.getElementById('cpf').value,
         rg: document.getElementById('rg').value,
@@ -68,72 +80,74 @@ document.getElementById('update-form')?.addEventListener('submit', function (eve
         enterprise: document.getElementById('enterprise').value,
         department: document.getElementById('department').value,
         status: document.getElementById('status').checked,
-        observations: document.getElementById('observations').value,
+        observations: document.getElementById('observations').value
     };
 
-    fetch(`${apiUrl}/${id}`, {
+    fetch(`http://localhost:8080/gestaoTerceirizados/edit/${terceirizado.id}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify(terceirizado)
-    }).then(() => {
-        window.location.href = 'tc-index.html';
-    });
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Terceirizado atualizado com sucesso!');
+            window.location.href = 'tc-index.html';
+        } else {
+            return response.text().then(text => { throw new Error(text); });
+        }
+    })
+    .catch(error => alert('Erro: ' + error.message));
 });
 
-// Função para visualizar detalhes de um terceirizado
-function viewTerceirizado(id) {
-    fetch(`${apiUrl}/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('id').textContent = data.id;
-            document.getElementById('name').textContent = data.name;
-            document.getElementById('cpf').textContent = data.cpf;
-            document.getElementById('rg').textContent = data.rg;
-            document.getElementById('phone').textContent = data.phone;
-            document.getElementById('address').textContent = data.address;
-            document.getElementById('email').textContent = data.email;
-            document.getElementById('position').textContent = data.position;
-            document.getElementById('enterprise').textContent = data.enterprise;
-            document.getElementById('department').textContent = data.department;
-            document.getElementById('status').textContent = data.status ? 'Ativo' : 'Inativo';
-            document.getElementById('observations').textContent = data.observations;
-            window.location.href = 'view.html';
-        });
-}
-
-// Função para editar um terceirizado (preencher o formulário)
-function editTerceirizado(id) {
-    fetch(`${apiUrl}/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('id').value = data.id;
-            document.getElementById('name').value = data.name;
-            document.getElementById('cpf').value = data.cpf;
-            document.getElementById('rg').value = data.rg;
-            document.getElementById('phone').value = data.phone;
-            document.getElementById('address').value = data.address;
-            document.getElementById('email').value = data.email;
-            document.getElementById('position').value = data.position;
-            document.getElementById('enterprise').value = data.enterprise;
-            document.getElementById('department').value = data.department;
-            document.getElementById('status').checked = data.status;
-            document.getElementById('observations').value = data.observations;
-            window.location.href = 'update.html';
-        });
-}
-
-// Função para excluir um terceirizado
+// Exclui um terceirizado
 function deleteTerceirizado(id) {
-    fetch(`${apiUrl}/${id}`, {
-        method: 'DELETE'
-    }).then(() => {
-        fetchTerceirizados();
-    });
+    if (confirm('Tem certeza que deseja excluir este terceirizado?')) {
+        fetch(`http://localhost:8080/gestaoTerceirizados/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Terceirizado excluído com sucesso!');
+                loadTerceirizados();
+            } else {
+                return response.text().then(text => { throw new Error(text); });
+            }
+        })
+        .catch(error => alert('Erro: ' + error.message));
+    }
 }
 
-// Chamar a função para listar os terceirizados ao carregar a página
-if (document.querySelector('#terceirizados-table')) {
-    fetchTerceirizados();
+// Carrega dados do terceirizado no formulário de edição
+function editTerceirizado(id) {
+    fetch(`http://localhost:8080/gestaoTerceirizados/id/${id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+    })
+    .then(response => response.json())
+    .then(terceirizado => {
+        document.getElementById('id').value = terceirizado.id;
+        document.getElementById('name').value = terceirizado.name;
+        document.getElementById('cpf').value = terceirizado.cpf;
+        document.getElementById('rg').value = terceirizado.rg;
+        document.getElementById('phone').value = terceirizado.phone;
+        document.getElementById('address').value = terceirizado.address;
+        document.getElementById('email').value = terceirizado.email;
+        document.getElementById('position').value = terceirizado.position;
+        document.getElementById('enterprise').value = terceirizado.enterprise;
+        document.getElementById('department').value = terceirizado.department;
+        document.getElementById('status').checked = terceirizado.status;
+        document.getElementById('observations').value = terceirizado.observations;
+    })
+    .catch(error => alert('Erro: ' + error.message));
 }
+
+// Inicializa a lista de terceirizados ao carregar a página
+document.addEventListener('DOMContentLoaded', loadTerceirizados);

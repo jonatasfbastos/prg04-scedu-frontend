@@ -31,6 +31,11 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         alert(message);
         window.location.href = '../home.html';
     })
+    .then(data => {
+        localStorage.setItem('authToken', data.token);
+        alert("Login realizado com sucesso!");
+        window.location.href = 'tc-index.html'; // ws verifica aqui <<<
+    })
     .catch(error => {
         // Se houver um erro na requisição, exibe a mensagem de erro no elemento de mensagem de erro
         const errorMessage = document.getElementById('error-message');
