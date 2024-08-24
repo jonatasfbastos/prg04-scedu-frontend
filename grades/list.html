@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Grades</h1>
+        <input type="text" id="searchInput" placeholder="Search grades...">
+        <button onclick="window.location.href='create.html'">Add New Grade</button>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Curriculum Code</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="gradesTableBody">
+                <!-- Data will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Edit Form -->
+    <div id="editFormContainer" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditForm()">&times;</span>
+            <h2>Edit Grade</h2>
+            <form id="editGradeForm">
+                <label for="editCode">Code:</label>
+                <input type="text" id="editCode" name="editCode" required>
+
+                <label for="editName">Name:</label>
+                <input type="text" id="editName" name="editName" required>
+
+                <label for="editCurriculumCode">Curriculum Code:</label>
+                <input type="text" id="editCurriculumCode" name="editCurriculumCode" required>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
