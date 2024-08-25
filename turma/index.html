@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Turmas</title>
+    <link rel="stylesheet" href="../turma/style.css">
+</head>
+<body>
+    <header>
+        <h1>Gestão de Turmas</h1>
+    </header>
+    <main>
+        <section id="turmas-list">
+            <h2>Turmas</h2>
+            <table id="turmas-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Escola</th>
+                        <th>Nome</th>
+                        <th>Série</th>
+                        <th>Ano Letivo</th>
+                        <th>Número da Sala</th>
+                        <th>Turno</th>
+                        <th>Número Máximo de Alunos</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="turmas-tbody">
+                    <!-- Turmas serão listadas aqui -->
+                </tbody>
+            </table>
+        </section>
+        <section id="turma-form">
+            <h2>Cadastrar/Alterar Turma</h2>
+            <form id="turma-form">
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo"><br><br>
+                <label for="escola">Escola:</label>
+                <input type="text" id="escola" name="escola"><br><br>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome"><br><br>
+                <label for="serie">Série:</label>
+                <input type="text" id="serie" name="serie"><br><br>
+                <label for="anoLetivo">Ano Letivo:</label>
+                <input type="number" id="anoLetivo" name="anoLetivo"><br><br>
+                <label for="numeroSala">Número da Sala:</label>
+                <input type="number" id="numeroSala" name="numeroSala"><br><br>
+                <label for="turno">Turno:</label>
+                <input type="text" id="turno" name="turno"><br><br>
+                <label for="numeroMaximoAlunos">Número Máximo de Alunos:</label>
+                <input type="number" id="numeroMaximoAlunos" name="numeroMaximoAlunos"><br><br>
+                <button id="submit-btn">Cadastrar/Alterar</button>
+            </form>
+        </section>
+        <section id="search">
+            <h2>Pesquisar Turma</h2>
+            <input type="text" id="search-input" placeholder="Pesquisar...">
+            <button id="search-btn">Pesquisar</button>
+        </section>
+    </main>
+    <script src="../turma/script.js"></script>
+</body>
+</html>
