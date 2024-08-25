@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+
+    <header>
+        <h1>Students</h1>
+        <input type="text" id="searchInput" placeholder="Search students">
+        <button onclick="window.location.href='register_student.html'">Add New Student</button>
+    </header>
+  
+    <table id="students-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Código</th>
+                <th>CPF</th>
+                <th>RG</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="students-table-body">
+            <!-- Rows will be dynamically populated -->
+        </tbody>
+    </table>
+
+    <!-- Edit Form -->
+<div id="editFormContainer" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditForm()">&times;</span>
+        <h2>Edit Student</h2>
+        <form id="editStudentForm">
+            <label for="editCode">Code:</label>
+            <input type="text" id="editCode" name="editCode" required>
+
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" name="editName" required>
+
+            <label for="editSocialName">Social Name:</label>
+            <input type="text" id="editSocialName" name="editSocialName">
+
+            <label for="editGender">Gender:</label>
+            <input type="text" id="editGender" name="editGender" required>
+
+            <label for="editGenderIdentity">Gender Identity:</label>
+            <input type="text" id="editGenderIdentity" name="editGenderIdentity">
+
+            <label for="editStudentRg">Student RG:</label>
+            <input type="text" id="editStudentRg" name="editStudentRg" required>
+
+            <label for="editStudentRgIssuingAuthority">Student RG Issuing Authority:</label>
+            <input type="text" id="editStudentRgIssuingAuthority" name="editStudentRgIssuingAuthority" required>
+
+            <label for="editStudentRgIssueDate">Student RG Issue Date:</label>
+            <input type="date" id="editStudentRgIssueDate" name="editStudentRgIssueDate" required>
+
+            <label for="editStudentCpf">Student CPF:</label>
+            <input type="text" id="editStudentCpf" name="editStudentCpf" required>
+
+            <label for="editVoterRegistration">Voter Registration:</label>
+            <input type="text" id="editVoterRegistration" name="editVoterRegistration">
+
+            <label for="editBirthDate">Birth Date:</label>
+            <input type="date" id="editBirthDate" name="editBirthDate" required>
+
+            <label for="editFatherName">Father's Name:</label>
+            <input type="text" id="editFatherName" name="editFatherName">
+
+            <label for="editMotherName">Mother's Name:</label>
+            <input type="text" id="editMotherName" name="editMotherName" required>
+
+            <label for="editFatherRg">Father's RG:</label>
+            <input type="text" id="editFatherRg" name="editFatherRg">
+
+            <label for="editFatherRgIssuingAuthority">Father's RG Issuing Authority:</label>
+            <input type="text" id="editFatherRgIssuingAuthority" name="editFatherRgIssuingAuthority">
+
+            <label for="editFatherRgIssueDate">Father's RG Issue Date:</label>
+            <input type="date" id="editFatherRgIssueDate" name="editFatherRgIssueDate">
+
+            <label for="editFatherCpf">Father's CPF:</label>
+            <input type="text" id="editFatherCpf" name="editFatherCpf">
+
+            <label for="editFatherProfession">Father's Profession:</label>
+            <input type="text" id="editFatherProfession" name="editFatherProfession">
+
+            <label for="editMotherRg">Mother's RG:</label>
+            <input type="text" id="editMotherRg" name="editMotherRg" required>
+
+            <label for="editMotherRgIssuingAuthority">Mother's RG Issuing Authority:</label>
+            <input type="text" id="editMotherRgIssuingAuthority" name="editMotherRgIssuingAuthority" required>
+
+            <label for="editMotherRgIssueDate">Mother's RG Issue Date:</label>
+            <input type="date" id="editMotherRgIssueDate" name="editMotherRgIssueDate" required>
+
+            <label for="editMotherCpf">Mother's CPF:</label>
+            <input type="text" id="editMotherCpf" name="editMotherCpf" required>
+
+            <label for="editMotherProfession">Mother's Profession:</label>
+            <input type="text" id="editMotherProfession" name="editMotherProfession" required>
+
+            <label for="editLegalGuardian">Legal Guardian:</label>
+            <input type="text" id="editLegalGuardian" name="editLegalGuardian">
+
+            <label for="editStudentPhone">Student Phone:</label>
+            <input type="text" id="editStudentPhone" name="editStudentPhone" required>
+
+            <label for="editGuardianPhone">Guardian Phone:</label>
+            <input type="text" id="editGuardianPhone" name="editGuardianPhone" required>
+
+            <label for="editZipCode">Zip Code:</label>
+            <input type="text" id="editZipCode" name="editZipCode" required>
+
+            <label for="editStreet">Street:</label>
+            <input type="text" id="editStreet" name="editStreet" required>
+
+            <label for="editNumber">Number:</label>
+            <input type="text" id="editNumber" name="editNumber" required>
+
+            <label for="editCity">City:</label>
+            <input type="text" id="editCity" name="editCity" required>
+
+            <label for="editNeighborhood">Neighborhood:</label>
+            <input type="text" id="editNeighborhood" name="editNeighborhood" required>
+
+            <label for="editState">State:</label>
+            <input type="text" id="editState" name="editState" required>
+
+            <label for="editLivingRegion">Living Region:</label>
+            <input type="text" id="editLivingRegion" name="editLivingRegion" required>
+
+            <label for="editNationality">Nationality:</label>
+            <input type="text" id="editNationality" name="editNationality" required>
+
+            <label for="editBirthPlace">Birth Place:</label>
+            <input type="text" id="editBirthPlace" name="editBirthPlace" required>
+
+            <label for="editPreviousSchool">Previous School:</label>
+            <input type="text" id="editPreviousSchool" name="editPreviousSchool" required>
+
+            <label for="editDisability">Disability:</label>
+            <input type="text" id="editDisability" name="editDisability">
+
+            <label for="editAllergies">Allergies:</label>
+            <input type="text" id="editAllergies" name="editAllergies">
+
+            <label for="editRelevantMedicalConditions">Relevant Medical Conditions:</label>
+            <input type="text" id="editRelevantMedicalConditions" name="editRelevantMedicalConditions">
+
+            <label for="editRegularMedications">Regular Medications:</label>
+            <input type="text" id="editRegularMedications" name="editRegularMedications">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
