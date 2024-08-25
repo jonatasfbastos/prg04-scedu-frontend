@@ -1,3 +1,60 @@
+let token = null;
+const email = 'teste@teste.com';
+const password = '123';
+
+// Função de login
+function login() {
+  fetch('http://localhost:8080/user/auth/login', {  // URL de login
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email: email, password: password })  // Ajuste no nome da variável
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Login failed');
+    }
+    return response.json();
+  })
+  .then(data => {
+    token = data.token;  // Armazena o token JWT
+    listAbsences();  // Chama a função para listar faltas após o login
+  })
+  .catch(error => console.error('Error during login:', error));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  login();  // Chama login ao carregar a página
+
+  // Implementação da funcionalidade de busca
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", function() {
+    const filter = searchInput.value.toLowerCase();
+    const rows = document.querySelectorAll("#gradesTableBody tr");
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
+  });
+});
+
+// Função para realizar requisições autenticadas
+function authenticatedFetch(url, options = {}) {
+  if (!token) {
+    console.error('No token available, please log in.');
+    return;
+  }
+
+  options.headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`,  // Adiciona o token JWT ao cabeçalho
+    'Content-Type': 'application/json'
+  };
+
+  return fetch(url, options);
+}
 
 // Função para adicionar uma falta
 function addAbsence() {
@@ -20,11 +77,8 @@ function addAbsence() {
             };
 
             try {
-                const response = await fetch('http://localhost:8080/absences/save', {
+                const response = await authenticatedFetch('http://localhost:8080/absences/save', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                     body: JSON.stringify(absenceData),
                 });
 
@@ -46,13 +100,12 @@ addAbsence();
 
 // Função para listar todas as faltas
 function listAbsences() {
-    document.addEventListener('DOMContentLoaded', async () => {
-        const absencesList = document.getElementById('absencesList');
-
-        try {
-            const response = await fetch('http://localhost:8080/absences');
-            const data = await response.json();
-
+    authenticatedFetch('http://localhost:8080/absences')
+        .then(response => response.json())
+        .then(data => {
+            const absencesList = document.getElementById('absencesList');
+            absencesList.innerHTML = ''; 
+            
             data.content.forEach(absence => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -68,16 +121,15 @@ function listAbsences() {
                 `;
                 absencesList.appendChild(row);
             });
-        } catch (error) {
-            console.error('Erro:', error);
-        }
-    });
+        })
+        .catch(error => console.error('Erro ao listar as faltas:', error));
 }
+
 
 // Função para deletar uma falta
 async function deleteAbsence(id) {
     try {
-        const response = await fetch(`http://localhost:8080/absences/delete/${id}`, {
+        const response = await authenticatedFetch(`http://localhost:8080/absences/delete/${id}`, {
             method: 'DELETE',
         });
 
@@ -93,9 +145,6 @@ async function deleteAbsence(id) {
     }
 }
 
-listAbsences();
-
-
 // Função para carregar dados da falta e atualizar
 function editAbsence() {
     document.addEventListener('DOMContentLoaded', async () => {
@@ -110,7 +159,7 @@ function editAbsence() {
         const editForm = document.getElementById('editAbsenceForm');
 
         try {
-            const response = await fetch(`http://localhost:8080/absences/${id}`);
+            const response = await authenticatedFetch(`http://localhost:8080/absences/${id}`);
             
             if (!response.ok) {
                 throw new Error('Erro ao carregar dados da falta.');
@@ -143,11 +192,8 @@ function editAbsence() {
             };
 
             try {
-                const response = await fetch(`http://localhost:8080/absences/update/${id}`, {
+                const response = await authenticatedFetch(`http://localhost:8080/absences/update/${id}`, {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                     body: JSON.stringify(absenceData),
                 });
 
@@ -165,9 +211,4 @@ function editAbsence() {
     });
 }
 
-editAbsence();
-
-
-
-
-
+listAbsences();
