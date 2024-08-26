@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Avaliações</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="principal">
+        <h1>Cadastro de Avaliações</h1>
+        <form id="avaliacao">
+            <div class="formulario">
+                <label for="nome">Nome da Avaliação</label>
+                <input type="text" id="form_name" name="name" required>
+            
+            
+                <label for="descrição">Descrição</label>
+                <textarea id="form_descricao" name="descricao" required></textarea>
+            
+            
+                <label for="data">Data da Avaliação</label>
+                <input type="calendar" id="form_data" name="data_avaliacao" required>
+            
+            
+                <label for="nota">Nota da Avaliação</label>
+                <input type="number" id="form_peso" name="peso" required>
+            </div>
+
+            <div class="butoes">
+                <button type="submit">Cadastrar</button>
+                <button type="button" id="update-btn" disabled>Alterar</button>
+                <button type="button" id="delete-btn" disabled>Remover</button>
+            </div>
+        </form>
+
+        <h2>Avaliações Cadastradas</h2>
+        <table id="tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Data</th>
+                    <th>Nota</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- As avaliações serão listadas aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../JS/script.js"></script>
+</body>
+</html>

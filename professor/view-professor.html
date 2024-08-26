@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Professor</title>
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Visualizar Professor</h1>
+        <div id="alert-container"></div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title" id="professor-name"></h5>
+                <p><strong>Email:</strong> <span id="professor-email"></span></p>
+                <p><strong>SIAPE:</strong> <span id="professor-siape"></span></p>
+                <p><strong>Departamento:</strong> <span id="professor-departamento"></span></p>
+                <p><strong>Carga Horária:</strong> <span id="professor-carga-horaria"></span></p>
+                <a href="edit-professor.html" class="btn btn-warning">Editar</a>
+                <a href="index.html" class="btn btn-secondary">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="lib/bootstrap/bootstrap.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/view-professor.js"></script>
+</body>
+</html>

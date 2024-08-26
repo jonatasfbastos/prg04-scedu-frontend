@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de cursos</title>
+    <link rel="stylesheet" href="/gestaoCursos/css/stylecursos.css">
+</head>
+<body>
+    <h1>Gestão de Cursos</h1>
+     <!-- Campo de Pesquisa -->
+     <input type="text" id="searchInput" placeholder="Pesquisar cursos..." onkeyup="filterCourses()">
+
+
+    <!-- Contêiner que envolve a tabela e os botões -->
+    <div class="content-container">
+        <!-- Tabela de cursos -->
+        <div class="table-container">
+            <table id="coursesTable">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Status</th>
+                        <th>Modalidade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botões fora da tabela -->
+        <div class="button-container">
+            <button class="btn" onclick="window.location.href='form-add-course.html'">Adicionar</button>
+            
+        </div>
+    </div>
+    <script src="/gestaoCursos/js/scriptcurso.js"></script>
+</body>
+</html>
