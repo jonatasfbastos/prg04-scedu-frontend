@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Turmas</title>
+    <link rel="stylesheet" href="../turma/layout.css">
+</head>
+<body>
+    <h1>Listar Turmas</h1>
+    <input type="text" id="searchInput" placeholder="Pesquisar turmas...">
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Escola</th>
+                <th>Nome</th>
+                <th>Série</th>
+                <th>Ano Letivo</th>
+                <th>Número da Sala</th> 
+               <th>Turno</th>
+                <th>Número Máximo de Alunos</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="turmasTableBody">
+            <!-- Turmas serão adicionadas aqui pelo JavaScript -->
+        </tbody>
+    </table>
+    <a href="../turma/adicionar_turmas.html">Adicionar Nova turma</a>
+    <script src="../turma/script.js"></script>
+</body>
+</html>

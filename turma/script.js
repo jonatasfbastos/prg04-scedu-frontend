@@ -1,19 +1,15 @@
-// Constantes
-const API_URL = 'http://localhost:8080';
-const AUTH_TOKEN_KEY = 'authToken';
-
-// Variáveis globais
-let turmas = [];
-let turmaSelecionada = null;
+let token = null;
+const email = 'teste@teste.com';
+const password = '123';
 
 // Função de login
 function login() {
-  fetch(`${API_URL}user/auth/login`, {
+  fetch('http://localhost:8080/user/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email: 'user@email.com', password: 'password' })
+    body: JSON.stringify({ email: email, password: password })
   })
   .then(response => {
     if (!response.ok) {
@@ -22,143 +18,222 @@ function login() {
     return response.json();
   })
   .then(data => {
-    localStorage.setItem(AUTH_TOKEN_KEY, data.token);
-    carregarTurmas();
+    token = data.token;
+    listTurmas();  // Lista turmas após o login
   })
   .catch(error => console.error('Error during login:', error));
 }
 
-// Função para carregar as turmas
-function carregarTurmas() {
-  authenticatedFetch(`${API_URL}/turmas`, {
-    method: 'GET'
-  })
-  .then(response => response.json())
-  .then(data => {
-    turmas = data.content; // Use "data.content" se estiver paginando
-    renderizarTurmas(turmas);
-  })
-  .catch(error => console.error('Error fetching turmas:', error));
-}
+document.addEventListener("DOMContentLoaded", () => {
+  login();
 
-// Função para renderizar as turmas
-function renderizarTurmas(turmas) {
-  const turmasTbody = document.getElementById('turmas-tbody');
-  turmasTbody.innerHTML = '';
-  turmas.forEach(turma => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${turma.codigo}</td>
-      <td>${turma.escola}</td>
-      <td>${turma.nome}</td>
-      <td>${turma.serie}</td>
-      <td>${turma.anoLetivo}</td>
-      <td>${turma.numeroSala}</td>
-      <td>${turma.turno}</td>
-      <td>${turma.numeroMaximoAlunos}</td>
-      <td>
-        <button class="editar-btn" data-id="${turma.id}">Editar</button>
-        <button class="excluir-btn" data-id="${turma.id}">Excluir</button>
-      </td>
-    `;
-    turmasTbody.appendChild(row);
+  // Implementação da funcionalidade de busca
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", function() {
+    const filter = searchInput.value.toLowerCase();
+    const rows = document.querySelectorAll("#turmasTableBody tr");
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
   });
-}
+});
 
-// Função para cadastrar ou alterar uma turma
-function cadastrarTurma() {
-  const turmaForm = document.getElementById('turma-form');
-  const turma = {
-    codigo: turmaForm.codigo.value,
-    escola: turmaForm.escola.value,
-    nome: turmaForm.nome.value,
-    serie: turmaForm.serie.value,
-    anoLetivo: parseInt(turmaForm.anoLetivo.value, 10), // Garantir que anoLetivo é um int
-    numeroSala: parseInt(turmaForm.numeroSala.value, 10), // Garantir que numeroSala é um int
-    turno: turmaForm.turno.value,
-    numeroMaximoAlunos: parseInt(turmaForm.numeroMaximoAlunos.value, 10), // Garantir que numeroMaximoAlunos é um int
+// Função para realizar requisições autenticadas
+function authenticatedFetch(url, options = {}) {
+  if (!token) {
+    return Promise.reject(new Error('No token available, please log in.'));
+  }
+
+  options.headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
   };
 
-  const method = turmaSelecionada ? 'PUT' : 'POST';
-  const url = turmaSelecionada ? `${API_URL}/turmas/${turmaSelecionada.id}` : `${API_URL}/turmas`;
-
-  authenticatedFetch(url, {
-    method: method,
-    body: JSON.stringify(turma)
-  })
-  .then(response => response.json())
-  .then(() => {
-    console.log('Turma salva com sucesso!');
-    carregarTurmas();
-  })
-  .catch(error => console.error('Error saving turma:', error));
+  return fetch(url, options);
 }
 
-// Função para excluir uma turma
-function excluirTurma(id) {
-  if (confirm('Tem certeza que deseja excluir esta turma?')) {
-    authenticatedFetch(`${API_URL}/turmas/${id}`, {
-      method: 'DELETE'
-    })
+// Função para listar todas as turmas
+function listTurmas() {
+  authenticatedFetch('http://localhost:8080/turmas')
     .then(response => response.json())
-    .then(() => {
-      console.log('Turma excluída com sucesso!');
-      carregarTurmas();
-    })
-    .catch(error => console.error('Error deleting turma:', error));
-  }
-}
+    .then(data => {
+      const turmasTableBody = document.getElementById('turmasTableBody');
+      turmasTableBody.innerHTML = ''; 
 
-// Função para pesquisar turmas
-function pesquisarTurmas() {
-  const searchInput = document.getElementById('search-input');
-  const searchTerm = searchInput.value.toLowerCase();
-  const filteredTurmas = turmas.filter(turma => {
-    return Object.values(turma).some(value => 
-      value.toString().toLowerCase().includes(searchTerm)
-    );
-  });
-  renderizarTurmas(filteredTurmas);
-}
-
-// Função para fazer requisições autenticadas
-function authenticatedFetch(url, options) {
-    const token = localStorage.getItem(AUTH_TOKEN_KEY);
-    options.headers = {
-      ...options.headers,
-      Authorization: `Bearer ${token}`
-    };
-    return fetch(url, options);
-  }
-  
- // Eventos
-document.addEventListener('DOMContentLoaded', function() {
-    login();
-    const submitBtn = document.getElementById('submit-btn');
-    const searchBtn = document.getElementById('search-btn');
-    const turmasTbody = document.getElementById('turmas-tbody');
-  
-    if (submitBtn && searchBtn && turmasTbody) {
-      submitBtn.addEventListener('click', cadastrarTurma);
-      searchBtn.addEventListener('click', pesquisarTurmas);
-      turmasTbody.addEventListener('click', (e) => {
-        if (e.target.classList.contains('editar-btn')) {
-          const id = e.target.dataset.id;
-          turmaSelecionada = turmas.find(turma => turma.id === id);
-          const turmaForm = document.getElementById('turma-form');
-          turmaForm.codigo.value = turmaSelecionada.codigo;
-          turmaForm.escola.value = turmaSelecionada.escola;
-          turmaForm.nome.value = turmaSelecionada.nome;
-          turmaForm.serie.value = turmaSelecionada.serie;
-          turmaForm.anoLetivo.value = turmaSelecionada.anoLetivo;
-          turmaForm.numeroSala.value = turmaSelecionada.numeroSala;
-          turmaForm.turno.value = turmaSelecionada.turno;
-          turmaForm.numeroMaximoAlunos.value = turmaSelecionada.numeroMaximoAlunos;
-        } else if (e.target.classList.contains('excluir-btn')) {
-          excluirTurma(e.target.dataset.id);
-        }
+      data.content.forEach(turma => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${turma.codigo}</td>
+          <td>${turma.escola}</td>
+          <td>${turma.nome}</td>
+          <td>${turma.serie}</td>
+          <td>${turma.anoLetivo}</td>
+          <td>${turma.numeroSala}</td>
+          <td>${turma.turno}</td>
+          <td>${turma.numeroMaximoAlunos}</td>
+          <td>
+            <a href="../turma/editar_turmas.html?id=${turma.id}">Editar</a>
+            <button onclick="deleteTurma(${turma.id})">Deletar</button>
+          </td>
+        `;
+        turmasTableBody.appendChild(row);
       });
+    })
+    .catch(error => console.error('Erro ao listar as turmas:', error));
+}
+
+// Função para deletar uma turma
+async function deleteTurma(id) {
+  try {
+    const response = await authenticatedFetch(`http://localhost:8080/turmas/delete/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      alert('Turma deletada com sucesso!');
+      window.location.reload();
     } else {
-      console.error('Erro: elementos não encontrados no DOM');
+      alert('Erro ao deletar a turma.');
     }
-  });
+  } catch (error) {
+    console.error('Erro:', error);
+    alert('Erro ao deletar a turma.');
+  }
+}
+// Função para adicionar uma turma
+function addTurma() {
+    const addForm = document.getElementById('addTurmaForm');
+  
+    addForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+  
+      const codigo = document.getElementById('codigo').value;
+      const escola = document.getElementById('escola').value;
+      const nome = document.getElementById('nome').value;
+      const serie = document.getElementById('serie').value;
+      const anoLetivo = parseInt(document.getElementById('anoLetivo').value);
+      const numeroSala = parseInt(document.getElementById('numeroSala').value);
+      const turno = document.getElementById('turno').value;
+      const numeroMaximoAlunos = parseInt(document.getElementById('numeroMaximoAlunos').value);
+  
+      const turmaData = {
+        codigo,
+        escola,
+        nome,
+        serie,
+        anoLetivo,
+        numeroSala,
+        turno,
+        numeroMaximoAlunos
+      };
+  
+      try {
+        const response = await authenticatedFetch('http://localhost:8080/turmas/save', {
+          method: 'POST',
+          body: JSON.stringify(turmaData),
+        });
+  
+        if (response.ok) {
+          alert('Turma adicionada com sucesso!');
+          addForm.reset();
+        } else {
+          alert('Erro ao adicionar a turma.');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao adicionar a turma.');
+      }
+    });
+  }
+  
+  addTurma();
+
+
+// Função para carregar dados da turma e atualizar
+function editTurma() {
+    document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (!id) {
+            alert('ID da turma não fornecido.');
+            return;
+        }
+
+        const editForm = document.getElementById('editTurmaForm');
+
+        if (!editForm) {
+            console.error('Erro: formulário não encontrado');
+            return;
+        }
+
+        try {
+            const response = await authenticatedFetch(`http://localhost:8080/turmas/${id}`);
+            
+            if (!response.ok) {
+                throw new Error('Erro ao carregar dados da turma.');
+            }
+
+            const data = await response.json();
+
+            document.getElementById('codigo').value = data.codigo;
+            document.getElementById('escola').value = data.escola;
+            document.getElementById('nome').value = data.nome;
+            document.getElementById('serie').value = data.serie;
+            document.getElementById('anoLetivo').value = data.anoLetivo;
+            document.getElementById('numeroSala').value = data.numeroSala;
+            document.getElementById('turno').value = data.turno;
+            document.getElementById('numeroMaximoAlunos').value = data.numeroMaximoAlunos;
+        } catch (error) {
+            console.error('Erro:', error);
+            alert(error.message);
+        }
+
+        editForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const codigo = document.getElementById('codigo').value;
+            const escola = document.getElementById('escola').value;
+            const nome = document.getElementById('nome').value;
+            const serie = document.getElementById('serie').value;
+            const anoLetivo = document.getElementById('anoLetivo').value;
+            const numeroSala = document.getElementById('numeroSala').value;
+            const turno = document.getElementById('turno').value;
+            const numeroMaximoAlunos = document.getElementById('numeroMaximoAlunos').value;
+
+            const turmaData = {
+                codigo,
+                escola,
+                nome,
+                serie,
+                anoLetivo,
+                numeroSala,
+                turno,
+                numeroMaximoAlunos
+            };
+
+            try {
+                const response = await authenticatedFetch(`http://localhost:8080/turmas/update/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(turmaData),
+                });
+
+                if (response.ok) {
+                    alert('Turma atualizada com sucesso!');
+                    window.location.href = './listar_turmas.html'; // Redireciona para a lista de turmas após atualização
+                } else {
+                    throw new Error('Erro ao atualizar a turma.');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert(error.message);
+            }
+        });
+    });
+}
+
+editTurma();
+listTurmas();

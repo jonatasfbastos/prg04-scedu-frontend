@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Turma</title>
+    <link rel="stylesheet" href="../turma/layout.css">
+</head>
+<body>
+    <h1>Editar Turma</h1>
+    <form id="editTurmaForm">
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" required>
+
+        <label for="escola">Escola:</label>
+        <input type="text" id="escola" required>
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required>
+
+        <label for="serie">Série:</label>
+        <input type="text" id="serie" required>
+
+        <label for="anoLetivo">Ano Letivo:</label>
+        <input type="number" id="anoLetivo" required>
+
+        <label for="numeroSala">Número da Sala:</label>
+        <input type="number" id="numeroSala" required>
+
+        <label for="turno">Turno:</label>
+        <input type="text" id="turno" required>
+
+        <label for="numeroMaximoAlunos">Número Máximo de Alunos:</label>
+        <input type="number" id="numeroMaximoAlunos" required>
+
+        <button type="submit">Atualizar</button>
+    </form>
+    <a href="../turma/listar_turmas.html">Listar Turmas</a>
+    <script src="../turma/script.js"></script>
+</body>
+</html>
