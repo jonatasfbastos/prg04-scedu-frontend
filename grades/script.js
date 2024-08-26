@@ -1,7 +1,7 @@
 let editingGradeId = null;
 let token = null;
 const email = 'exemplo@email';
-const password = 'exemplosenha';
+const password = 'exemplo';
 
 // Função de login
 function login() {
@@ -133,5 +133,29 @@ function deleteGrade(id) {
     })
     .catch(error => console.error("Error deleting grade:", error));
   }
+}
+
+const createGradeForm = document.getElementById("createGradeForm");
+if (createGradeForm) {
+  createGradeForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    const newGrade = {
+      code: document.getElementById("code").value,
+      name: document.getElementById("name").value,
+      curriculumCode: document.getElementById("curriculumCode").value
+    };
+
+    authenticatedFetch("http://localhost:8080/grades", {
+      method: "POST",
+      body: JSON.stringify(newGrade)
+    })
+    .then(response => response.json())
+    .then(() => {
+      alert("Grade created successfully!");
+      window.location.href = "list.html"; // Redireciona para a lista de séries
+    })
+    .catch(error => console.error("Error creating grade:", error));
+  });
 }
 
