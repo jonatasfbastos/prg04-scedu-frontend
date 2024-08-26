@@ -1,11 +1,49 @@
-// Carrega todos os terceirizados
-function loadTerceirizados() {
-    fetch('http://localhost:8080/gestaoTerceirizados', {
-        method: 'GET',
+let token = null;
+const email = 'exemplo@email';
+const password = 'exemplosenha';
+
+// Função de login
+function login() {
+    fetch('http://localhost:8080/user/auth/login', {
+        method: 'POST',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        }
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email, password: password })
     })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        token = data.token;
+        localStorage.setItem('authToken', token); // Armazena o token no localStorage
+        loadTerceirizados(); // Carrega os terceirizados após o login
+    })
+    .catch(error => console.error('Error during login:', error));
+}
+
+// Função para realizar requisições autenticadas
+function authenticatedFetch(url, options = {}) {
+    if (!token) {
+        console.error('No token available, please log in.');
+        return;
+    }
+
+    options.headers = {
+        ...options.headers,
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+
+    return fetch(url, options);
+}
+
+// Função para carregar todos os terceirizados
+function loadTerceirizados() {
+    authenticatedFetch('http://localhost:8080/gestaoTerceirizados')
     .then(response => response.json())
     .then(terceirizados => {
         const tbody = document.querySelector('#terceirizados-table tbody');
@@ -24,7 +62,8 @@ function loadTerceirizados() {
             `;
             tbody.appendChild(tr);
         });
-    });
+    })
+    .catch(error => console.error('Error loading terceirizados:', error));
 }
 
 // Cria um novo terceirizado
@@ -45,12 +84,8 @@ document.getElementById('create-form').addEventListener('submit', function(event
         observations: document.getElementById('observations').value
     };
 
-    fetch('http://localhost:8080/gestaoTerceirizados/save', {
+    authenticatedFetch('http://localhost:8080/gestaoTerceirizados/save', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
         body: JSON.stringify(terceirizado)
     })
     .then(response => {
@@ -62,7 +97,7 @@ document.getElementById('create-form').addEventListener('submit', function(event
         }
     })
     .catch(error => alert('Erro: ' + error.message));
-});
+}); 
 
 // Atualiza um terceirizado
 document.getElementById('update-form').addEventListener('submit', function(event) {
@@ -83,12 +118,8 @@ document.getElementById('update-form').addEventListener('submit', function(event
         observations: document.getElementById('observations').value
     };
 
-    fetch(`http://localhost:8080/gestaoTerceirizados/edit/${terceirizado.id}`, {
+    authenticatedFetch(`http://localhost:8080/gestaoTerceirizados/edit/${terceirizado.id}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
         body: JSON.stringify(terceirizado)
     })
     .then(response => {
@@ -105,19 +136,12 @@ document.getElementById('update-form').addEventListener('submit', function(event
 // Exclui um terceirizado
 function deleteTerceirizado(id) {
     if (confirm('Tem certeza que deseja excluir este terceirizado?')) {
-        fetch(`http://localhost:8080/gestaoTerceirizados/delete/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            }
+        authenticatedFetch(`http://localhost:8080/gestaoTerceirizados/delete/${id}`, {
+            method: 'DELETE'
         })
-        .then(response => {
-            if (response.ok) {
-                alert('Terceirizado excluído com sucesso!');
-                loadTerceirizados();
-            } else {
-                return response.text().then(text => { throw new Error(text); });
-            }
+        .then(() => {
+            alert('Terceirizado excluído com sucesso!');
+            loadTerceirizados();
         })
         .catch(error => alert('Erro: ' + error.message));
     }
@@ -125,12 +149,7 @@ function deleteTerceirizado(id) {
 
 // Carrega dados do terceirizado no formulário de edição
 function editTerceirizado(id) {
-    fetch(`http://localhost:8080/gestaoTerceirizados/id/${id}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        }
-    })
+    authenticatedFetch(`http://localhost:8080/gestaoTerceirizados/id/${id}`)
     .then(response => response.json())
     .then(terceirizado => {
         document.getElementById('id').value = terceirizado.id;
@@ -150,4 +169,4 @@ function editTerceirizado(id) {
 }
 
 // Inicializa a lista de terceirizados ao carregar a página
-document.addEventListener('DOMContentLoaded', loadTerceirizados);
+document.addEventListener('DOMContentLoaded', login);
