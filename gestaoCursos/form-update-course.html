@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/gestaoCursos/css/stylecursos.css">
+</head>
+<body>
+    <h1>Editar Curso</h1>
+
+    <form id="editCourseForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required value="Nome do Curso">
+
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" name="codigo" required value="Código do Curso">
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="4" required>Descrição do Curso</textarea>
+
+        <label for="cargaHoraria">Carga Horária (horas):</label>
+        <input type="number" id="cargaHoraria" name="cargaHoraria" required value="40">
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="ativo" selected>Ativo</option>
+            <option value="inativo">Inativo</option>
+        </select>
+
+        <label for="modalidade">Modalidade:</label>
+        <select id="modalidade" name="modalidade" required>
+            <option value="presencial" selected>Presencial</option>
+            <option value="online">Online</option>
+        </select>
+        <div class="container-button-update">
+            <button type="submit" class="btnupdate">Salvar</button>
+            <a href="/gestaoCursos/indexcurso.html" class="btnupdate">
+                Retornar
+            </a>
+            
+        </div>
+        
+    </form>
+
+    <script src="/gestaoCursos/css/stylecursos.css"></script>
+</body>
+</html>

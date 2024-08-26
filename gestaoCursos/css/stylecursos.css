@@ -1,0 +1,174 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #000000;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    background-color: #35add4;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Espaçamento entre os botões */
+    display: block;
+    width: 150px; /* Definindo a largura dos botões */
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: #208fd4;
+}
+
+.button-container {
+    display: flex;
+    flex-direction:column; /* Alinha os botões verticalmente */
+    margin-left: auto; /* Empurra a div dos botões para a direita */
+    margin-bottom: 20px; /* Espaçamento entre os botões e a tabela */
+}
+
+/* Container para a tabela e os botões */
+.content-container {
+    display: flex;
+    align-items: flex-start; /* Alinha a tabela e os botões no topo */
+    gap: 20px; /* Espaço entre a tabela e os botões */
+}
+
+.table-container {
+    flex-grow: 1; /* Permite que a tabela use o espaço restante */
+}
+
+@media (max-width: 600px) {
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .btn {
+        padding: 8px;
+    }
+}
+
+/* Estilos para os formulários de Adicionar e Editar Curso */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+form .btn{
+    display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    gap: 10px; 
+}
+.btnadd{
+    background-color: #50c3e9;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Espaçamento entre os botões */
+    width: 150px; /* Definindo a largura dos botões */
+    display:flex;
+    text-align: center;
+    justify-content: center;
+}
+.btnadd:hover{
+    background-color: #2a9ae0;
+}
+.container-button-add{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 22%;
+}
+.btnupdate{
+    background-color: #50c3e9;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Espaçamento entre os botões */
+    width: 150px; /* Definindo a largura dos botões */
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    
+}
+.btnupdate:hover {
+    background-color: #2a9ae0;
+}
+.container-button-update{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 22%;
+    
+}
+/* estilização para search input*/
+#searchInput {
+    width: 28.4%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+@media (max-width: 600px) {
+    label, input[type="text"], input[type="number"], textarea, select {
+        font-size: 14px;
+    }
+}
