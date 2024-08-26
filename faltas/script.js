@@ -107,39 +107,43 @@ addAbsence();
 
 // Função para listar todas as faltas
 function listAbsences() {
-  authenticatedFetch('http://localhost:8080/absences')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Erro ao listar as faltas.');
-      }
-      return response.json();
-    })
-    .then(data => {
-      const absencesList = document.getElementById('absencesList');
-      if (absencesList) {
-        absencesList.innerHTML = '';
-
-        data.content.forEach(absence => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${absence.id}</td>
-            <td>${absence.student}</td>
-            <td>${absence.date}</td>
-            <td>${absence.justified ? 'Sim' : 'Não'}</td>
-            <td>${absence.subject}</td>
-            <td>
-              <a href="./editar_faltas.html?id=${absence.id}">Editar</a>
-              <button onclick="deleteAbsence(${absence.id})">Deletar</button>
-            </td>
-          `;
-          absencesList.appendChild(row);
-        });
-      } else {
-        console.error('Elemento absencesList não encontrado!');
-      }
-    })
-    .catch(error => console.error('Erro ao listar as faltas:', error));
-}
+    authenticatedFetch('http://localhost:8080/absences')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao listar as faltas.');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const absencesList = document.getElementById('absencesList');
+        if (absencesList) {
+          absencesList.innerHTML = '';
+  
+          // Ordena os dados pelo id em ordem crescente
+          data.content.sort((a, b) => a.id - b.id);
+  
+          data.content.forEach(absence => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${absence.id}</td>
+              <td>${absence.student}</td>
+              <td>${absence.date}</td>
+              <td>${absence.justified ? 'Sim' : 'Não'}</td>
+              <td>${absence.subject}</td>
+              <td>
+                <a href="./editar_faltas.html?id=${absence.id}">Editar</a>
+                <button onclick="deleteAbsence(${absence.id})">Deletar</button>
+              </td>
+            `;
+            absencesList.appendChild(row);
+          });
+        } else {
+          console.error('Elemento absencesList não encontrado!');
+        }
+      })
+      .catch(error => console.error('Erro ao listar as faltas:', error));
+  }
+  
 
 // Função para deletar uma falta
 async function deleteAbsence(id) {
