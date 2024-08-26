@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/gestaoCursos/css/stylecursos.css">
+</head>
+<body>
+    <h1>Adicionar Curso</h1>
+
+    <form id="courseForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" name="codigo" required>
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="4" required></textarea>
+
+        <label for="cargaHoraria">Carga Horária (horas):</label>
+        <input type="number" id="cargaHoraria" name="cargaHoraria" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+        </select>
+
+        <label for="modalidade">Modalidade:</label>
+        <select id="modalidade" name="modalidade" required>
+            <option value="presencial">Presencial</option>
+            <option value="online">Online</option>
+        </select>
+        <div class="container-button-add">
+             <button type="submit" class="btnadd">Salvar</button>
+             <button class="btnadd" onclick="window.location.href='indexcurso.html'">Retornar</button>
+        </div>
+        
+    </form>
+    <script src="js/scriptcurso.js"></script>
+</body>
+</html>
