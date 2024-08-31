@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Disciplinas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestão de Disciplinas</h1>
+
+        <!-- Formulário de cadastro e edição -->
+        <form id="disciplina-form">
+            <input type="hidden" id="disciplina-id">
+            <div class="form-group">
+                <label for="nomeDisciplina">Nome da Disciplina:</label>
+                <input type="text" id="nomeDisciplina" required>
+            </div>
+            <div class="form-group">
+                <label for="nomeAbreviado">Nome Abreviado:</label>
+                <input type="text" id="nomeAbreviado" required>
+            </div>
+            <div class="form-group">
+                <label for="baseCurricular">Base Curricular:</label>
+                <select id="baseCurricular" required>
+                    <option value="NACIONAL">Nacional</option>
+                    <option value="DIVERSIFICADA">Diversificada</option>
+                    <option value="PROFISSIONAL">Profissional</option>
+                    <option value="RELIGIOSO">Religioso</option>
+                </select>
+            </div>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
