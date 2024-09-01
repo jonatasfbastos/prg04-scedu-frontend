@@ -1,11 +1,13 @@
+const escolaId = new URLSearchParams(window.location.search).get("inep");
+
 document.addEventListener('DOMContentLoaded', function () {
     const escolaForm = document.getElementById('escolaForm');
 
     // Função para buscar os dados da escola e preencher o formulário
     async function fetchEscolaData() {
-        const escolaId = 1; // Defina o ID manualmente aqui
-        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNDkwODc0NH0.M7hhso73R4wmTTXIM8oPuQx6d0pzLF3a5ArWEQKPHL4'; // Substitua pelo token obtido na autenticação
-        const url = `http://localhost:8080/escola/findById/252`;
+        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTIyMTMyNH0.n7OdUEActJIr9_EWKGs5vl4yZQu9vtjQ7tNonxIkz_o'; // Substitua pelo token obtido na autenticação
+        
+        const url = `http://localhost:8080/escola/findById/${escolaId}`;
 
         try {
             const response = await fetch(url, {
@@ -49,7 +51,7 @@ document.getElementById("btnEditar").addEventListener("click", function (event) 
     // Previne o comportamento padrão de submissão do formulário
     event.preventDefault();
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNDkwODc0NH0.M7hhso73R4wmTTXIM8oPuQx6d0pzLF3a5ArWEQKPHL4';
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTIyMTMyNH0.n7OdUEActJIr9_EWKGs5vl4yZQu9vtjQ7tNonxIkz_o';
     
     // Coleta o ID da escola e os dados do formulário
 
@@ -67,7 +69,7 @@ document.getElementById("btnEditar").addEventListener("click", function (event) 
     };
 
     // Faz uma requisição PUT para atualizar os dados da escola
-    fetch(`http://localhost:8080/escola/update/252`, {
+    fetch(`http://localhost:8080/escola/update/${escolaId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -89,4 +91,3 @@ document.getElementById("btnEditar").addEventListener("click", function (event) 
             alert(error.message);
         });
 });
-

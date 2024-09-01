@@ -1,8 +1,8 @@
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNDkwODc0NH0.M7hhso73R4wmTTXIM8oPuQx6d0pzLF3a5ArWEQKPHL4';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTIxNzI3Mn0.Pdnfr3iDnMoUMhE9cYVXt_F15dW4G1mpUWg1LS6NO1I';
 
-const tabela = document.getElementById('escolasTable');
+const tabela = document.getElementById('escolasTable').getElementsByTagName('tbody')[0];
 
-const a = fetch('http://localhost:8080/escola/findall?page=0&size=6', {
+fetch('http://localhost:8080/escola/findAll?page=0&size=', {
     method: "GET",
     headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,22 @@ const a = fetch('http://localhost:8080/escola/findall?page=0&size=6', {
                 row.insertCell(7).textContent = escola.telefone;
                 row.insertCell(8).textContent = escola.modalidade;
                 row.insertCell(9).textContent = escola.nomeDiretor;
-        // Continue preenchendo as células conforme necessário
+                
+                // Adiciona a célula de ações com os botões de editar e deletar
+                const acaoEditar = row.insertCell(10);
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Editar';
+                editButton.onclick = () => {
+                    window.location.href = `editarEscola.html?inep=${escola.id}`;
+                };
+
+                acaoEditar.appendChild(editButton);
+
+                const acaoDeletar = row.insertCell(11);
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Deletar';
+                deleteButton.onclick = () => deleteEscola(escola.id);
+                acaoDeletar.appendChild(deleteButton);
             });
         } else {
             console.error("A 'content' não é um array.");
@@ -37,3 +52,26 @@ const a = fetch('http://localhost:8080/escola/findall?page=0&size=6', {
     .catch(error => {
         console.error("Erro ao buscar escolas:", error);
     });
+
+// Função para deletar a escola
+function deleteEscola(id) {
+    if (confirm('Tem certeza que deseja deletar esta escola?')) {
+        fetch(`http://localhost:8080/escola/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Escola deletada com sucesso!');
+                location.reload(); // Recarrega a página para atualizar a lista
+            } else {
+                alert('Erro ao deletar a escola.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao deletar a escola:', error);
+        });
+    }
+}
