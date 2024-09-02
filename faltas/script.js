@@ -68,16 +68,16 @@ function addAbsence() {
       addForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const studentName = document.getElementById('studentName').value;
+        const studentId = document.getElementById('studentId').value;
         const absenceDate = document.getElementById('absenceDate').value;
         const justified = document.getElementById('justified').value === 'true';
-        const subject = document.getElementById('subject').value;
+        const subjectId = document.getElementById('subjectId').value;
 
         const absenceData = {
-          student: studentName,
+          student: { id: studentId },
           date: absenceDate,
           justified,
-          subject
+          subject: { id: subjectId }
         };
 
         try {
@@ -105,45 +105,45 @@ function addAbsence() {
 
 addAbsence();
 
+
 // Função para listar todas as faltas
 function listAbsences() {
-    authenticatedFetch('http://localhost:8080/absences')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Erro ao listar as faltas.');
-        }
-        return response.json();
-      })
-      .then(data => {
-        const absencesList = document.getElementById('absencesList');
-        if (absencesList) {
-          absencesList.innerHTML = '';
-  
-          // Ordena os dados pelo id em ordem crescente
-          data.content.sort((a, b) => a.id - b.id);
-  
-          data.content.forEach(absence => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${absence.id}</td>
-              <td>${absence.student}</td>
-              <td>${absence.date}</td>
-              <td>${absence.justified ? 'Sim' : 'Não'}</td>
-              <td>${absence.subject}</td>
-              <td>
-                <a href="./editar_faltas.html?id=${absence.id}">Editar</a>
-                <button onclick="deleteAbsence(${absence.id})">Deletar</button>
-              </td>
-            `;
-            absencesList.appendChild(row);
-          });
-        } else {
-          console.error('Elemento absencesList não encontrado!');
-        }
-      })
-      .catch(error => console.error('Erro ao listar as faltas:', error));
-  }
-  
+  authenticatedFetch('http://localhost:8080/absences')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao listar as faltas.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const absencesList = document.getElementById('absencesList');
+      if (absencesList) {
+        absencesList.innerHTML = '';
+
+        data.content.sort((a, b) => a.id - b.id);
+
+        data.content.forEach(absence => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${absence.id}</td>
+            <td>${absence.student.name}</td>
+            <td>${absence.date}</td>
+            <td>${absence.justified ? 'Sim' : 'Não'}</td>
+            <td>${absence.subject.name}</td>
+            <td>
+              <a href="./editar_faltas.html?id=${absence.id}">Editar</a>
+              <button onclick="deleteAbsence(${absence.id})">Deletar</button>
+            </td>
+          `;
+          absencesList.appendChild(row);
+        });
+      } else {
+        console.error('Elemento absencesList não encontrado!');
+      }
+    })
+    .catch(error => console.error('Erro ao listar as faltas:', error));
+}
+
 
 // Função para deletar uma falta
 async function deleteAbsence(id) {
@@ -190,10 +190,10 @@ function editAbsence() {
 
       const data = await response.json();
 
-      document.getElementById('studentName').value = data.student;
+      document.getElementById('studentId').value = data.student.id;
       document.getElementById('absenceDate').value = data.date;
       document.getElementById('justified').value = data.justified ? 'true' : 'false';
-      document.getElementById('subject').value = data.subject;
+      document.getElementById('subjectId').value = data.subject.id;
     } catch (error) {
       console.error('Erro:', error);
       alert(error.message);
@@ -202,16 +202,16 @@ function editAbsence() {
     editForm.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const studentName = document.getElementById('studentName').value;
+      const studentId = document.getElementById('studentId').value;
       const absenceDate = document.getElementById('absenceDate').value;
       const justified = document.getElementById('justified').value === 'true';
-      const subject = document.getElementById('subject').value;
+      const subjectId = document.getElementById('subjectId').value;
 
       const absenceData = {
-        student: studentName,
+        student: { id: studentId },
         date: absenceDate,
         justified,
-        subject
+        subject: { id: subjectId }
       };
 
       try {
@@ -235,3 +235,4 @@ function editAbsence() {
 }
 
 editAbsence();
+
