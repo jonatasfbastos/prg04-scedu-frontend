@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Avaliações</title>
     <link rel="stylesheet" href="../css/style.css">
+    <meta name="_csrf" content="your-csrf-token-here">
+
 </head>
 <body>
     <div class="principal">
@@ -16,15 +18,15 @@
             
             
                 <label for="descrição">Descrição</label>
-                <textarea id="form_descricao" name="descricao" required></textarea>
+                <textarea id="form_description" name="descricao" required></textarea>
             
             
                 <label for="data">Data da Avaliação</label>
-                <input type="calendar" id="form_data" name="data_avaliacao" required>
+                <input type="calendar" id="form_date_evaluation" name="data_avaliacao" required>
             
             
                 <label for="nota">Nota da Avaliação</label>
-                <input type="number" id="form_peso" name="peso" required>
+                <input type="number" id="form_note" name="nota" required>
             </div>
 
             <div class="butoes">

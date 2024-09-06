@@ -1,24 +1,27 @@
 const avaliacaoForm = document.querySelector("form");
 const Iname = document.querySelector("#form_name");
-const Idescricao = document.querySelector("#form_descricao");
-const Idata = document.querySelector("#form_data");
-const Ipeso = document.querySelector("#form_peso");
+const Idescription = document.querySelector("#form_description");
+const Idate_evaluation = document.querySelector("#form_date_evaluation");
+const Inote = document.querySelector("#form_note");
 
 function criarAvaliacao() {
     const avaliacaoData = {
         name: Iname.value,
-        descricao: Idescricao.value,
-        data_avaliacao: Idata.value, 
-        peso: Ipeso.value
+        description: Idescription.value,
+        date_evaluation: Idate_evaluation.value, 
+        note: Inote.value
     };
 
     console.log("Dados enviados para o backend:", avaliacaoData);
+
+    let token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 
     fetch("http://localhost:8081/avaliacao/save", {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa('user:062bc7fc-f3f5-48f2-9595-cfa8a95f5a63')
+            'Authorization': 'Basic ' + btoa('user:'), //lembre de colocar o token
+            'X-CSRF-TOKEN': token
         },
         method: "POST",
         body: JSON.stringify(avaliacaoData)
@@ -40,9 +43,9 @@ function criarAvaliacao() {
 
 function limpar() {
     Iname.value = "";
-    Idescricao.value = "";
-    Idata.value = "";
-    Ipeso.value = "";
+    Idescription.value = "";
+    Idate_evaluation.value = "";
+    Inote.value = "";
 }
 
 avaliacaoForm.addEventListener('submit', function(event) {
@@ -50,4 +53,3 @@ avaliacaoForm.addEventListener('submit', function(event) {
     criarAvaliacao();
     limpar();
 });
-
