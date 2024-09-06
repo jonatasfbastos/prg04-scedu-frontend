@@ -14,7 +14,7 @@ document.getElementById('escolaForm').addEventListener('submit', function(event)
         nomeDiretor: document.getElementById('nomeDiretor').value
     };
 
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTIxNzI3Mn0.Pdnfr3iDnMoUMhE9cYVXt_F15dW4G1mpUWg1LS6NO1I'; // Insira o token JWT aqui
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTY3MzEwMn0.AR8CKWsbbSVctF-2cUaB1eIeS2WXRXgAqwk_IzDQ9xw'; // Insira o token JWT aqui
 
     fetch('http://localhost:8080/escola/save', {
         method: 'POST',

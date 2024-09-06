@@ -9,6 +9,13 @@
 <body>
     <div class="container">
         <h1>Lista de Escolas</h1>
+        
+        <!-- Campo de busca -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar por nome">
+            <button onclick="buscarEscola()">Buscar</button>
+        </div>
+        
         <table id="escolasTable">
             <thead>
                 <tr>

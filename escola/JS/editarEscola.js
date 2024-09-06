@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para buscar os dados da escola e preencher o formulário
     async function fetchEscolaData() {
-        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTIyMTMyNH0.n7OdUEActJIr9_EWKGs5vl4yZQu9vtjQ7tNonxIkz_o'; // Substitua pelo token obtido na autenticação
+        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXZpLmFuZHJhZGUuMjAyM0BlbWFpbC5jb20iLCJpc3MiOiJhdXRoLWFwaSIsImV4cCI6MTcyNTY3MzEwMn0.AR8CKWsbbSVctF-2cUaB1eIeS2WXRXgAqwk_IzDQ9xw'; // Substitua pelo token obtido na autenticação
         
         const url = `http://localhost:8080/escola/findById/${escolaId}`;
 
