@@ -1,7 +1,7 @@
 let editingGradeId = null;
 let token = null;
-const email = 'exemplo@email';
-const password = 'exemplo';
+const email = 'lararods73@gmail.com';
+const password = '1234';
 
 // Função de login
 function login() {
@@ -20,7 +20,8 @@ function login() {
   })
   .then(data => {
     token = data.token;  // Armazena o token JWT
-    fetchGrades();  // Faz a requisição autenticada após o login
+    fetchGrades(); 
+    fetchCourses(); // Faz a requisição autenticada após o login
   })
   .catch(error => console.error('Error during login:', error));
 }
@@ -40,6 +41,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function fetchCourses() {
+  authenticatedFetch('http://localhost:8080/Cursos/findall')
+    .then(response => response.json())
+    .then(data => {
+      const courseSelect = document.getElementById('course');
+      data.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course.code;  // ID do curso
+        option.textContent = course.name;  // Nome do curso
+        courseSelect.appendChild(option);
+      });
+    })
+    .catch(error => console.error('Error fetching courses:', error));
+}
 
 // Função para realizar requisições autenticadas
 function authenticatedFetch(url, options = {}) {
@@ -143,7 +159,8 @@ if (createGradeForm) {
     const newGrade = {
       code: document.getElementById("code").value,
       name: document.getElementById("name").value,
-      curriculumCode: document.getElementById("curriculumCode").value
+      curriculumCode: document.getElementById("curriculumCode").value,
+      courseId: document.getElementById("course").value
     };
 
     authenticatedFetch("http://localhost:8080/grades", {
