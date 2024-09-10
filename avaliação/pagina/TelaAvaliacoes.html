@@ -1,68 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Avaliações</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <meta name="_csrf" content="your-csrf-token-here">
-
+    <title>Avaliações</title>
+    <link rel="stylesheet" href="../css/style.css"> <!-- Inclua seu CSS se houver -->
 </head>
 <body>
-    <div class="principal">
-        <h1>Cadastro de Avaliações</h1>
-        <form id="avaliacao">
-            <div class="formulario">
-                <label for="nome">Nome da Avaliação</label>
-                <input type="text" id="form_name" name="name" required>
-            
-                <label for="descrição">Descrição</label>
-                <textarea id="form_description" name="descricao" required></textarea>
-            
-                <label for="data">Data da Avaliação</label>
-                <input type="calendar" id="form_date_evaluation" name="data_avaliacao" required>
-            
-                <label for="nota">Nota da Avaliação</label>
-                <input type="number" id="form_note" name="nota" required>
+    <h1>Avaliações</h1>
+    
+    <!-- Formulário de Avaliação -->
+    <form id="avaliacaoForm">
+        <!-- Campo para o nome da avaliação -->
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <!-- Campo para a descrição da avaliação -->
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" required></textarea>
+        
+        <!-- Campo para a data da avaliação -->
+        <label for="date_evaluation">Data da Avaliação:</label>
+        <input type="date" id="date_evaluation" name="date_evaluation" required>
+        
+        <!-- Campo para a nota da avaliação -->
+        <label for="note">Nota:</label>
+        <input type="number" id="note" name="note" required>
+        
+        <!-- Campo para a disciplina da avaliação -->
+        <label for="subject">Disciplina:</label>
+        <input type="text" id="subject" name="subject" required>
+        
+        <!-- Campo para a turma da avaliação -->
+        <label for="class">Turma:</label>
+        <input type="text" id="class" name="class" required>
+        
+        <!-- Campo para o professor da avaliação -->
+        <label for="teacher">Professor:</label>
+        <input type="text" id="teacher" name="teacher" required>
+        
+        <!-- Botão para salvar uma nova avaliação -->
+        <button type="submit">Salvar</button>
+        
+        <!-- Botão para atualizar uma avaliação existente (inicialmente desativado) -->
+        <button type="button" id="updateBtn" disabled>Atualizar</button>
+        
+        <!-- Botão para deletar uma avaliação existente (inicialmente desativado) -->
+        <button type="button" id="deleteBtn" disabled>Deletar</button>
+        
+        <!-- Botão para limpar os campos do formulário -->
+        <button type="button" id="clearBtn">Limpar</button>
+    </form>
+    
+    <!-- Seção de Tabela de Avaliações -->
+    <h2>Lista de Avaliações</h2>
+    
+    <!-- Campo de busca para filtrar avaliações -->
+    <input type="text" id="searchInput" placeholder="Buscar avaliações">
+    
+    <!-- Tabela para listar as avaliações -->
+    <table id="tabela">
+        <thead>
+            <tr>
+                <!-- Cabeçalhos da tabela -->
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Data da Avaliação</th>
+                <th>Nota</th>
+                <th>Disciplina</th>
+                <th>Turma</th>
+                <th>Professor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas da tabela serão inseridas pelo JavaScript -->
+        </tbody>
+    </table>
 
-                <label for="disciplina">Disciplina</label>
-                <input type="text" id="form_subject" name="disciplina" required>
-
-                <label for="turma">Turma</label>
-                <input type="text" id="form_class" name="turma" required>
-
-                <label for="professor">Professor</label>
-                <input type="text" id="form_teacher" name="professor" required>
-            </div>
-
-            <div class="butoes">
-                <button type="submit">Cadastrar</button>
-                <button type="button" id="update-btn" disabled>Alterar</button>
-                <button type="button" id="delete-btn" disabled>Remover</button>
-            </div>
-        </form>
-
-        <h2>Avaliações Cadastradas</h2>
-        <table id="tabela">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Data</th>
-                    <th>Nota</th>
-                    <th>Disciplina</th>
-                    <th>Turma</th>
-                    <th>Professor</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- As avaliações serão listadas aqui -->
-            </tbody>
-        </table>
-    </div>
-
+    <!-- Inclusão do arquivo JavaScript -->
     <script src="../JS/script.js"></script>
 </body>
 </html>
-
